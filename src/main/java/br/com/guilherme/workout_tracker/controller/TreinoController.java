@@ -2,6 +2,7 @@ package br.com.guilherme.workout_tracker.controller;
 
 import br.com.guilherme.workout_tracker.dto.TreinoDTO;
 import br.com.guilherme.workout_tracker.service.TreinoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class TreinoController {
     }
 
     @PostMapping
-    public ResponseEntity<TreinoDTO> cadastrarTreino(@RequestBody TreinoDTO treinoDTO) {
+    public ResponseEntity<TreinoDTO> cadastrarTreino(@Valid @RequestBody TreinoDTO treinoDTO) {
         TreinoDTO treino = service.cadastrarTreino(treinoDTO);
 
         return ResponseEntity.ok(treino);
