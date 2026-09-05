@@ -2,6 +2,7 @@ package br.com.guilherme.workout_tracker.service;
 
 import br.com.guilherme.workout_tracker.dto.SerieDTO;
 import br.com.guilherme.workout_tracker.entities.SerieModel;
+import br.com.guilherme.workout_tracker.exceptions.SerieNaoEncontradaException;
 import br.com.guilherme.workout_tracker.mappers.SerieMapper;
 import br.com.guilherme.workout_tracker.repository.SerieRepository;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,11 @@ public class SerieService {
     }
 
     public SerieDTO listarPorId(Long id){
-        SerieModel serie = repository.findById(id).orElseThrow(()-> new RuntimeException("Série não encontrada."));
+        SerieModel serie = repository.findById(id).orElseThrow(()-> new SerieNaoEncontradaException());
         return (mapper.toDto(serie));
-
     }
     public SerieDTO atualizarRir(Long id, Integer rir){
-        SerieModel serie = repository.findById(id).orElseThrow(()-> new RuntimeException("Série não encontrada."));
+        SerieModel serie = repository.findById(id).orElseThrow(()-> new SerieNaoEncontradaException());
 
         serie.setRir(rir);
         SerieModel serieSalva = repository.save(serie);
@@ -34,7 +34,7 @@ public class SerieService {
     }
 
     public SerieDTO atualizarReps(Long id, Integer reps){
-        SerieModel serie = repository.findById(id).orElseThrow(() -> new RuntimeException("Série não encontrada."));
+        SerieModel serie = repository.findById(id).orElseThrow(() -> new SerieNaoEncontradaException());
 
         serie.setReps(reps);
         SerieModel serieSalva = repository.save(serie);
@@ -43,7 +43,7 @@ public class SerieService {
     }
 
     public SerieDTO atualizarCarga(Long id, BigDecimal carga){
-        SerieModel serie = repository.findById(id).orElseThrow(()-> new RuntimeException("Série não encontrada."));
+        SerieModel serie = repository.findById(id).orElseThrow(()-> new SerieNaoEncontradaException());
 
         serie.setCarga(carga);
         SerieModel serieSalva = repository.save(serie);

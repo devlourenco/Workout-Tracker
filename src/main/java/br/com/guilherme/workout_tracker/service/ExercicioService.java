@@ -3,6 +3,7 @@ package br.com.guilherme.workout_tracker.service;
 import br.com.guilherme.workout_tracker.dto.ExercicioDTO;
 import br.com.guilherme.workout_tracker.entities.ExercicioModel;
 import br.com.guilherme.workout_tracker.enums.GrupoMuscularEnum;
+import br.com.guilherme.workout_tracker.exceptions.ExercicioNaoEncontradoException;
 import br.com.guilherme.workout_tracker.mappers.ExercicioMapper;
 import br.com.guilherme.workout_tracker.repository.ExercicioRepository;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,12 @@ public class ExercicioService {
     }
 
     public ExercicioDTO listarPorId(Long id) {
-        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new RuntimeException("Exercício não encontrado."));
+        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new ExercicioNaoEncontradoException());
         return mapper.toDto(exercicio);
     }
 
     public ExercicioDTO atualizarNome(Long id, String nome) {
-        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new RuntimeException("Exercício não encontrado."));
+        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new ExercicioNaoEncontradoException());
         exercicio.setNome(nome);
         ExercicioModel exercicioSalvo = repository.save(exercicio);
 
@@ -32,7 +33,7 @@ public class ExercicioService {
     }
 
     public ExercicioDTO atualizarGrupoMuscular(Long id, GrupoMuscularEnum grupoMuscular){
-        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new RuntimeException("Exercício não encontrado."));
+        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new ExercicioNaoEncontradoException());
         exercicio.setGrupoMuscular(grupoMuscular);
         ExercicioModel exercicioSalvo = repository.save(exercicio);
 
