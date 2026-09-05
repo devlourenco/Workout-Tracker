@@ -17,22 +17,34 @@ public class TreinoController {
     }
 
     @PostMapping
-    public ResponseEntity<TreinoDTO> cadastrarTreino(@RequestBody TreinoDTO treinoDTO){
-       TreinoDTO treino = service.cadastrarTreino(treinoDTO);
+    public ResponseEntity<TreinoDTO> cadastrarTreino(@RequestBody TreinoDTO treinoDTO) {
+        TreinoDTO treino = service.cadastrarTreino(treinoDTO);
 
         return ResponseEntity.ok(treino);
     }
 
     @GetMapping
-    public ResponseEntity<List<TreinoDTO>> listarTreinos(){
+    public ResponseEntity<List<TreinoDTO>> listarTreinos() {
         List<TreinoDTO> treinos = service.listarTreinos();
         return ResponseEntity.ok(treinos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TreinoDTO> listarPorId(@PathVariable Long id){
+    public ResponseEntity<TreinoDTO> listarPorId(@PathVariable Long id) {
         TreinoDTO treino = service.listarPorId(id);
         return ResponseEntity.ok(treino);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<TreinoDTO> atualizarTreino(@PathVariable Long id, @RequestBody TreinoDTO treinoDTO) {
+        TreinoDTO treino = service.atualizarTreino(id, treinoDTO);
+        return ResponseEntity.ok(treino);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<TreinoDTO> deletarTreino(@PathVariable Long id) {
+        service.deletarTreino(id);
+        return ResponseEntity.noContent().build();
 
     }
 }
