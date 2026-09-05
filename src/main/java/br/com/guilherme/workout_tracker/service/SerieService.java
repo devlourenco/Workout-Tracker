@@ -20,12 +20,13 @@ public class SerieService {
         this.mapper = mapper;
     }
 
-    public SerieDTO listarPorId(Long id){
-        SerieModel serie = repository.findById(id).orElseThrow(()-> new SerieNaoEncontradaException());
-        return (mapper.toDto(serie));
+    public SerieDTO listarPorId(Long id) {
+        SerieModel serie = repository.findById(id).orElseThrow(SerieNaoEncontradaException::new);
+        return mapper.toDto(serie);
     }
-    public SerieDTO atualizarRir(Long id, Integer rir){
-        SerieModel serie = repository.findById(id).orElseThrow(()-> new SerieNaoEncontradaException());
+
+    public SerieDTO atualizarRir(Long id, Integer rir) {
+        SerieModel serie = repository.findById(id).orElseThrow(SerieNaoEncontradaException::new);
 
         serie.setRir(rir);
         SerieModel serieSalva = repository.save(serie);
@@ -33,8 +34,8 @@ public class SerieService {
         return mapper.toDto(serieSalva);
     }
 
-    public SerieDTO atualizarReps(Long id, Integer reps){
-        SerieModel serie = repository.findById(id).orElseThrow(() -> new SerieNaoEncontradaException());
+    public SerieDTO atualizarReps(Long id, Integer reps) {
+        SerieModel serie = repository.findById(id).orElseThrow(SerieNaoEncontradaException::new);
 
         serie.setReps(reps);
         SerieModel serieSalva = repository.save(serie);
@@ -42,8 +43,8 @@ public class SerieService {
         return mapper.toDto(serieSalva);
     }
 
-    public SerieDTO atualizarCarga(Long id, BigDecimal carga){
-        SerieModel serie = repository.findById(id).orElseThrow(()-> new SerieNaoEncontradaException());
+    public SerieDTO atualizarCarga(Long id, BigDecimal carga) {
+        SerieModel serie = repository.findById(id).orElseThrow(SerieNaoEncontradaException::new);
 
         serie.setCarga(carga);
         SerieModel serieSalva = repository.save(serie);

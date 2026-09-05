@@ -20,20 +20,20 @@ public class ExercicioService {
     }
 
     public ExercicioDTO listarPorId(Long id) {
-        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new ExercicioNaoEncontradoException());
+        ExercicioModel exercicio = repository.findById(id).orElseThrow(ExercicioNaoEncontradoException::new);
         return mapper.toDto(exercicio);
     }
 
     public ExercicioDTO atualizarNome(Long id, String nome) {
-        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new ExercicioNaoEncontradoException());
+        ExercicioModel exercicio = repository.findById(id).orElseThrow(ExercicioNaoEncontradoException::new);
         exercicio.setNome(nome);
         ExercicioModel exercicioSalvo = repository.save(exercicio);
 
         return mapper.toDto(exercicioSalvo);
     }
 
-    public ExercicioDTO atualizarGrupoMuscular(Long id, GrupoMuscularEnum grupoMuscular){
-        ExercicioModel exercicio = repository.findById(id).orElseThrow(() -> new ExercicioNaoEncontradoException());
+    public ExercicioDTO atualizarGrupoMuscular(Long id, GrupoMuscularEnum grupoMuscular) {
+        ExercicioModel exercicio = repository.findById(id).orElseThrow(ExercicioNaoEncontradoException::new);
         exercicio.setGrupoMuscular(grupoMuscular);
         ExercicioModel exercicioSalvo = repository.save(exercicio);
 
