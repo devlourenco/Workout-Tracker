@@ -4,6 +4,7 @@ import br.com.guilherme.workout_tracker.dto.TreinoDTO;
 import br.com.guilherme.workout_tracker.dto.TreinoUpdateDTO;
 import br.com.guilherme.workout_tracker.service.TreinoService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +34,7 @@ public class TreinoController {
     public ResponseEntity<TreinoDTO> cadastrarTreino(@Valid @RequestBody TreinoDTO treinoDTO) {
         TreinoDTO treino = service.cadastrarTreino(treinoDTO);
 
-        return ResponseEntity.ok(treino);
+        return ResponseEntity.status(HttpStatus.CREATED).body(treino);
     }
 
     @Operation(
