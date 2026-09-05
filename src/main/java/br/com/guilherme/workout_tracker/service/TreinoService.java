@@ -1,6 +1,7 @@
 package br.com.guilherme.workout_tracker.service;
 
 import br.com.guilherme.workout_tracker.dto.TreinoDTO;
+import br.com.guilherme.workout_tracker.dto.TreinoUpdateDTO;
 import br.com.guilherme.workout_tracker.entities.TreinoModel;
 import br.com.guilherme.workout_tracker.exceptions.TreinoNaoEncontradoException;
 import br.com.guilherme.workout_tracker.mappers.TreinoMapper;
@@ -11,8 +12,8 @@ import java.util.List;
 
 @Service
 public class TreinoService {
-    TreinoRepository repository;
-    TreinoMapper mapper;
+    private final TreinoRepository repository;
+    private final TreinoMapper mapper;
 
     public TreinoService(TreinoRepository repository, TreinoMapper mapper) {
         this.repository = repository;
@@ -23,7 +24,7 @@ public class TreinoService {
         TreinoModel novoTreino = mapper.toModel(treinoDTO);
         TreinoModel treinoSalvo = repository.save(novoTreino);
 
-        return (mapper.toDto(treinoSalvo));
+        return mapper.toDto(treinoSalvo);
     }
 
     public List<TreinoDTO> listarTreinos() {
@@ -36,21 +37,21 @@ public class TreinoService {
     }
 
     public TreinoDTO listarPorId(Long id) {
-        TreinoModel treinoPorId = repository.findById(id).orElseThrow(() -> new TreinoNaoEncontradoException());;
+        TreinoModel treinoPorId = repository.findById(id).orElseThrow(TreinoNaoEncontradoException::new);
         TreinoDTO treino = mapper.toDto(treinoPorId);
 
         return treino;
     }
 
-    public void deletarTreino(Long id){
-        TreinoModel treino = repository.findById(id).orElseThrow(()-> new TreinoNaoEncontradoException());
+    public void deletarTreino(Long id) {
+        TreinoModel treino = repository.findById(id).orElseThrow(TreinoNaoEncontradoException::new);
         repository.delete(treino);
     }
 
-    public TreinoDTO atualizarTreino(Long id, TreinoDTO treinoDTO) {
+    public TreinoDTO atualizarTreino(Long id, TreinoUpdateDTO treinoDTO) {
 
         TreinoModel treino = repository.findById(id)
-                .orElseThrow(() -> new TreinoNaoEncontradoException());
+                .orElseThrow(TreinoNaoEncontradoException::new);
 
         if (treinoDTO.getNome() != null) {
             treino.setNome(treinoDTO.getNome());

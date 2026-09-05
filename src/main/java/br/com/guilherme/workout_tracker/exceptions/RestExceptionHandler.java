@@ -1,5 +1,6 @@
 package br.com.guilherme.workout_tracker.exceptions;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,6 +42,21 @@ public class RestExceptionHandler {
                 .forEach(erro ->
                         erros.put(erro.getField(), erro.getDefaultMessage())
                 );
+
+        return ResponseEntity.badRequest().body(erros);
+    }
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String, String>> handleConstraintViolation(
+            ConstraintViolationException exception) {
+
+        Map<String, String> erros = new HashMap<>();
+
+        exception.getConstraintViolations().forEach(violacao ->
+                erros.put(
+                        violacao.getPropertyPath().toString(),
+                        violacao.getMessage()
+                )
+        );
 
         return ResponseEntity.badRequest().body(erros);
     }

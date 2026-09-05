@@ -4,7 +4,9 @@ package br.com.guilherme.workout_tracker.controller;
 import br.com.guilherme.workout_tracker.dto.ExercicioDTO;
 import br.com.guilherme.workout_tracker.enums.GrupoMuscularEnum;
 import br.com.guilherme.workout_tracker.service.ExercicioService;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         name = "Exercícios",
         description = "Operações para consulta e atualização de exercícios"
 )
+@Validated
 @RestController
 @RequestMapping("/exercicios")
 public class ExercicioController {
@@ -37,7 +40,7 @@ public class ExercicioController {
             summary = "Atualizar nome do exercício",
             description = "Atualiza o nome de um exercício existente"
     )
-    @PatchMapping("/{id}/nome")    public ResponseEntity<ExercicioDTO> atualizarNome(@PathVariable Long id, @RequestParam String nome) {
+    @PatchMapping("/{id}/nome")    public ResponseEntity<ExercicioDTO> atualizarNome(@PathVariable Long id, @RequestParam @NotBlank(message = "O nome do exercício é obrigatório") String nome) {
         ExercicioDTO exercicio = service.atualizarNome(id, nome);
         return ResponseEntity.ok(exercicio);
     }

@@ -5,6 +5,7 @@ import br.com.guilherme.workout_tracker.entities.TreinoModel;
 import br.com.guilherme.workout_tracker.exceptions.TreinoNaoEncontradoException;
 import br.com.guilherme.workout_tracker.mappers.TreinoMapper;
 import br.com.guilherme.workout_tracker.repository.TreinoRepository;
+import br.com.guilherme.workout_tracker.dto.TreinoUpdateDTO;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -197,11 +198,9 @@ class TreinoServiceTest {
         treinoExistente.setNome("Treino Antigo");
         treinoExistente.setDiaDaSemana(DayOfWeek.MONDAY);
 
-        TreinoDTO atualizacao = new TreinoDTO(
-                null,
+        TreinoUpdateDTO atualizacao = new TreinoUpdateDTO(
                 "Treino Atualizado",
-                DayOfWeek.WEDNESDAY,
-                null
+                DayOfWeek.WEDNESDAY
         );
 
         TreinoDTO treinoAtualizadoDTO = new TreinoDTO(
@@ -248,10 +247,8 @@ class TreinoServiceTest {
 
         Long id = 99L;
 
-        TreinoDTO atualizacao = new TreinoDTO(
-                null,
+        TreinoUpdateDTO atualizacao = new TreinoUpdateDTO(
                 "Treino Novo",
-                null,
                 null
         );
 
@@ -270,7 +267,6 @@ class TreinoServiceTest {
         verify(repository, never()).save(any());
         verifyNoInteractions(mapper);
     }
-
 
 
     @Test
